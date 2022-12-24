@@ -7,10 +7,26 @@ const Users = () => {
 
     console.log(users);
 
+    const counterUsers = users.length
+
+    const correctName = (count) => {
+        const chelovek = [1,5,6,7,8,9,10,11,12]
+        const cheloveka = [2,3,4]
+        return (chelovek.includes(count)) ? 'человек':'человека'
+    }
+
+        const counterUsersComponent = (
+            <>        
+            <h1>{counterUsers} {correctName(counterUsers)} тусанет с тобой сегодня</h1>
+            </>
+        )
+
     const handleListChange = (id) => {
         console.log(id);
         setUsers(prevState=>prevState.filter(item=> item!==id))
     }
+
+    
 
     let names = 
             <ul>
@@ -80,7 +96,12 @@ const Users = () => {
             </tbody>          
         </table>
 
-    return table
+    return (
+        <>
+            {counterUsersComponent}
+            {table}
+        </>
+        )
 }
 
 export default Users
