@@ -2,30 +2,31 @@ import React, {useState} from "react";
 import api from '../api'
 import { fetchAll } from "../api/fake.api/user.api";
 import 'bootstrap/dist/css/bootstrap.css'
+import SearchStatus from "./searchStatus";
 
 const Users = () => {
     const [users, setUsers] = useState(api.users.fetchAll());
 
     const counterUsers = users.length
 
-    const correctName = (count) => {
-        const chelovek = [1,5,6,7,8,9,10,11,12]
-        const cheloveka = [2,3,4]
-        return (chelovek.includes(count)) ? 'человек':'человека'
-    }
+    // const correctName = (count) => {
+    //     const chelovek = [1,5,6,7,8,9,10,11,12]
+    //     const cheloveka = [2,3,4]
+    //     return (chelovek.includes(count)) ? 'человек':'человека'
+    // }
 
-    const checkZero = (counterUsers) => {
-        if (counterUsers === 0) {
-            return (<span className="badge bg-danger large mh-50 vw-50 ">{counterUsers} {correctName(counterUsers)} тусанет с тобой сегодня</span>)
-        } else {
-            return (<span className="badge bg-primary large mh-50 vw-50 ">{counterUsers} {correctName(counterUsers)} тусанет с тобой сегодня</span>)
-        }
+    // const checkZero = (counterUsers) => {
+    //     if (counterUsers === 0) {
+    //         return (<span className="badge bg-danger large mh-50 vw-50 ">{counterUsers} {correctName(counterUsers)} тусанет с тобой сегодня</span>)
+    //     } else {
+    //         return (<span className="badge bg-primary large mh-50 vw-50 ">{counterUsers} {correctName(counterUsers)} тусанет с тобой сегодня</span>)
+    //     }
 
-    }
+    // }
 
-    const counterUsersComponent = (
-        checkZero(counterUsers)
-    )
+    // const counterUsersComponent = (
+    //     checkZero(counterUsers)
+    // )
 
     const handleListChange = (id) => {
         setUsers(prevState=>prevState.filter(item=> item!==id))
@@ -81,7 +82,7 @@ const Users = () => {
 
         return (
             <>
-                {counterUsersComponent}
+                <SearchStatus users = { users }/>
                 {table}
             </>
             )
