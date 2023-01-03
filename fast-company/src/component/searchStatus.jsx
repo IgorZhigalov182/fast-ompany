@@ -1,12 +1,9 @@
 import React, {useState} from "react";
 import Users from "./users2";
+import App from "../App";
 
 const SearchStatus = ({ users }) => {
-    // const [s, setS] = useState()
-    // console.log(props);
-    // console.log(props.users.length);
     let lengthUsers = users.length
-    console.log(users.length);
 
     const checkCorrectCount = (count) => {
         const chelovek = [1,5,6,7,8,9,10,11,12]
@@ -20,8 +17,9 @@ const SearchStatus = ({ users }) => {
         } else {
             return (<span className="badge bg-primary large mh-50 vw-50 ">{lengthUsers} {checkCorrectCount(lengthUsers)} тусанет с тобой сегодня</span>)
         }
-
     }
+
+    
 
     const counterUsersComponent = (
         checkZero(lengthUsers)
