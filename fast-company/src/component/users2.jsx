@@ -1,10 +1,16 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import User from "./user";
+import Pagination from "./pagination";
 
 const Users = ({users, ...rest}) => {
     const counterUsers = users.length
+    const pageSize = 4
 
+    const handlePageChange = (pageIndex) => {
+        console.log('page',pageIndex);
+         }
+    
     const table = 
         <table class="table-info">
             <thead>
@@ -34,9 +40,12 @@ const Users = ({users, ...rest}) => {
         return table.remove
     }
 
+
         return (
             <>
                 {table}
+                <Pagination itemsCount = {counterUsers} pageSize = {pageSize} onPageChange = {handlePageChange} />
+
                 {/* {() => toggleDisplayTableHead()} */}
             </>
             )
