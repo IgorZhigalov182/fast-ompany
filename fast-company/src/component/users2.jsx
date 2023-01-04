@@ -7,9 +7,12 @@ const Users = ({users, ...rest}) => {
     const counterUsers = users.length
     const pageSize = 4
 
+    const [currentPage, setCurrentPage] = useState(1)
+
     const handlePageChange = (pageIndex) => {
         console.log('page',pageIndex);
-         }
+        setCurrentPage(pageIndex)
+        }
     
     const table = 
         <table class="table-info">
@@ -44,7 +47,12 @@ const Users = ({users, ...rest}) => {
         return (
             <>
                 {table}
-                <Pagination itemsCount = {counterUsers} pageSize = {pageSize} onPageChange = {handlePageChange} />
+                <Pagination 
+                    itemsCount = {counterUsers} 
+                    pageSize = {pageSize} 
+                    currentPage = {currentPage}
+                    onPageChange = {handlePageChange} 
+                />
 
                 {/* {() => toggleDisplayTableHead()} */}
             </>

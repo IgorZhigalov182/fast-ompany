@@ -4,11 +4,12 @@ import { Qualitie } from "./qualitie";
 
 let User = ({user, ...rest}) => {
     let onDelete = rest.rest.onDelete
-    // let onToggleBookmark = rest.rest.onToggleBookMark
-
+    let onToggleBookmark = rest.rest.onToggleBookMark
+    // console.log(user);
     return (
         <tr key={user._id}>
-        <th >{user.name}</th>
+        <th>{user.name}</th>
+        
         <th>
             <tr> 
                 <Qualitie qualities = {(user.qualities)} />
@@ -21,7 +22,7 @@ let User = ({user, ...rest}) => {
             <tr>
                 <Bookmark 
                     bookmark = {user.bookmark} 
-                // toggleBookmark = {onToggleBookmark} 
+                    toggleBookmark = {()=>onToggleBookmark(user._id)} 
                 />
             </tr>
         </th>
@@ -32,8 +33,9 @@ let User = ({user, ...rest}) => {
                     <button class="btn btn-danger" onClick={()=> onDelete(user._id)}>Delete</button>
             </span>
         </th>
-        
         </tr>
+        
+        
     )
 }
 
