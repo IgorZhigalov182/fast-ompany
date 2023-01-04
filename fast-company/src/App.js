@@ -8,39 +8,49 @@ import { set } from "lodash";
 const App = () => {
     const [users, setUsers] = useState(api.users.fetchAll());
 
-    const [usersBook, setUsersBook] = useState(users)
-
     const handleDelete = (userId) => {
         setUsers(prevState => prevState.filter(item=>item._id !== userId))
     }
 
-
-    const handleToggleBookMark = (userId) => {
-        console.log(userId);
-        
-        // setUsers (prevState => prevState.map(item=>item.bookmark = !item.bookmark))
-
-        let newA = users.map((user) =>
-            {
-                if (user._id === userId ) {
-                    user.bookmark = !user.bookmark
-                }
-
-            }
-        )
-
-        setUsers(newA)
-
-
-        // setUsersBook(usersBook.forEach((user) =>
-        //     {
-        //         if (user._id === userId ) {
-        //             user.bookmark = !user.bookmark
-        //         }
-
-        //     }
-        // ))
+    const handleToggleBookmark = (userId) => {
+        setUsers(prevState => prevState.filter(item=>item._id !== userId))
     }
+
+    // const handleToggleBookMark = (userId) => {
+    //     console.log(userId);
+        
+    //     // setUsers (prevState => prevState.map(item=>item.bookmark = !item.bookmark))
+
+    //     users.map((user) =>
+    //         {
+    //             if (user._id === userId ) {
+    //                 user.bookmark = !user.bookmark
+    //             }
+    //         }
+    //     )
+
+
+    //     // let newA = users.map((user) =>
+    //     //     {
+    //     //         if (user._id === userId ) {
+    //     //             user.bookmark = !user.bookmark
+    //     //         }
+
+    //     //     }
+    //     // )
+
+    //     // setUsers(newA)
+
+
+    //     // setUsersBook(usersBook.forEach((user) =>
+    //     //     {
+    //     //         if (user._id === userId ) {
+    //     //             user.bookmark = !user.bookmark
+    //     //         }
+
+    //     //     }
+    //     // ))
+    // }
 
     return (
         <>
@@ -48,7 +58,7 @@ const App = () => {
             <Users 
                 users = { users } 
                 onDelete = { handleDelete } 
-                onToggleBookMark = { handleToggleBookMark }
+                onToggleBookmark = {handleToggleBookmark}
             />
         </>
     )

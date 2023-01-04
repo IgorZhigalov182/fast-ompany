@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types';
 
 const Pagination = ({itemsCount, pageSize, onPageChange, currentPage}) => {
     // const {itemsCount, pageSize, onPageChange} = props
@@ -16,12 +17,12 @@ const Pagination = ({itemsCount, pageSize, onPageChange, currentPage}) => {
                 <li 
                 className={"page-item"+(page===currentPage? ' active' : '')} 
                 key={'page_'+page}>
-                    <a  
+                    <button  
                         className="page-link"
                         onClick={()=>onPageChange(page)}
                     >
                         {page}
-                    </a>
+                    </button>
                 </li>
             )}
             
@@ -30,4 +31,11 @@ const Pagination = ({itemsCount, pageSize, onPageChange, currentPage}) => {
     );
 }
  
+Pagination.propTypes = {
+    itemsCount: PropTypes.number.isRequired, 
+    pageSize: PropTypes.number.isRequired, 
+    onPageChange : PropTypes.func.isRequired, 
+    currentPage: PropTypes.number.isRequired
+}
+
 export default Pagination;

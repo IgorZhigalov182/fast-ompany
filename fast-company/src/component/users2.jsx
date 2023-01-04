@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import User from "./user";
 import Pagination from "./pagination";
+import { paginate } from "../utils/paginate";
 
 const Users = ({users, ...rest}) => {
     const counterUsers = users.length
@@ -9,11 +10,14 @@ const Users = ({users, ...rest}) => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
+
     const handlePageChange = (pageIndex) => {
         console.log('page',pageIndex);
         setCurrentPage(pageIndex)
         }
-    
+
+    const userCrop = paginate (users, currentPage, pageSize)
+
     const table = 
         <table class="table-info">
             <thead>
@@ -28,10 +32,10 @@ const Users = ({users, ...rest}) => {
             </thead>
             <tbody>
                 {
-                        users.map(item=> {
+                        userCrop.map(item=> {
                            return(
                             <>
-                                <User user = {item} rest = {rest}/>
+                                <User user = {item} rest = {rest} key={item._id}/>
                             </>
                            ) 
                         })
