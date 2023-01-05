@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export const Qualitie = (qualities) => {
         let arrayQualities = Object.values(qualities)[0]
@@ -16,4 +17,8 @@ export const Qualitie = (qualities) => {
                 }
             </>
         )
+}
+
+Qualitie.propTypes = {
+    qualities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

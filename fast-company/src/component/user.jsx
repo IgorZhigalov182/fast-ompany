@@ -1,13 +1,11 @@
 import React from "react";
 import { Bookmark } from "./bookmark";
 import { Qualitie } from "./qualitie";
+import PropTypes from 'prop-types';
 
 let User = ({user, ...rest}) => {
     let onDelete = rest.rest.onDelete
-    // let onToggleBookmark = rest.rest.onToggleBookMark
-
     let onToggleBookmark = rest.rest.onToggleBookmark
-    // console.log(user);
     return (
         <tr key={user._id}>
         <th>{user.name}</th>
@@ -25,8 +23,8 @@ let User = ({user, ...rest}) => {
                 <Bookmark 
                     bookmark = {user.bookmark} 
                     key = {user._id}
-                    toggleBookmark = {onToggleBookmark} 
-                    // onClick = {()=>onToggleBookmark(user._id)}
+                    id = {user._id}
+                    toggle = {onToggleBookmark}
                 />
             </tr>
         </th>
@@ -41,6 +39,11 @@ let User = ({user, ...rest}) => {
         
         
     )
+}
+
+User.propTypes = {
+    user: PropTypes.object.isRequired, 
+    rest: PropTypes.object.isRequired, 
 }
 
 export default User

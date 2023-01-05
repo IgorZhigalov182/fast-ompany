@@ -1,30 +1,23 @@
-import React, {useState} from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 
 export const Bookmark = ({bookmark, ...rest}) => {
-    const [bookMark, setBookmark] = useState(bookmark)
-    // console.log(rest);
-    // let handleBookmark = rest.toggleBookmark
+
+    let bookMarkId = rest.id
+    let handleBookmark = rest.toggle
     
-    let handleBookmark = rest.toggleBookmark
-    let toggleDisplay = () => {
-       return( bookMark ? ('bi bi-bookmark-star-fill') : ('bi bi-bookmark-star'))
-    }
-
-    // let handleBookmark = (bookMark) => {
-    //     return setBookmark(bookMark = !bookMark)
-    // }
-
     return (
         <span>
             <button 
-                // className={toggleDisplay()} 
                 className={bookmark === true ? 'bi bi-bookmark-star-fill' : 'bi bi-bookmark-star'} 
-
-                // onClick={()=>handleBookmark(bookMark)}
-                onClick={()=>handleBookmark(bookmark)}
-
+                onClick = {()=>handleBookmark(bookMarkId)}
                 >
             </button>
         </span>
     )
+}
+
+Bookmark.propTypes = {
+    bookmark: PropTypes.bool.isRequired,
+    rest: PropTypes.func.isRequired,
 }

@@ -3,13 +3,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import User from "./user";
 import Pagination from "./pagination";
 import { paginate } from "../utils/paginate";
+import PropTypes from 'prop-types';
 
 const Users = ({users, ...rest}) => {
     const counterUsers = users.length
     const pageSize = 4
 
     const [currentPage, setCurrentPage] = useState(1)
-
 
     const handlePageChange = (pageIndex) => {
         console.log('page',pageIndex);
@@ -57,10 +57,13 @@ const Users = ({users, ...rest}) => {
                     currentPage = {currentPage}
                     onPageChange = {handlePageChange} 
                 />
-
-                {/* {() => toggleDisplayTableHead()} */}
             </>
             )
+}
+
+User.propTypes = {
+    user: PropTypes.arrayOf(PropTypes.object).isRequired, 
+    rest: PropTypes.object.isRequired, 
 }
 
 export default Users

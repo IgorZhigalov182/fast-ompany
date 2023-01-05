@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import Users from "./users2";
-import App from "../App";
+import PropTypes from 'prop-types';
 
 const SearchStatus = ({ users }) => {
     let lengthUsers = users.length
@@ -19,13 +18,15 @@ const SearchStatus = ({ users }) => {
         }
     }
 
-    
-
     const counterUsersComponent = (
         checkZero(lengthUsers)
     )
 
     return <h1>{counterUsersComponent}</h1>
+}
+
+SearchStatus.propTypes = {
+    users: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default SearchStatus
