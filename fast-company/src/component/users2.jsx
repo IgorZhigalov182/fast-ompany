@@ -1,25 +1,24 @@
-import React, {useState} from "react";
-import 'bootstrap/dist/css/bootstrap.css'
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import User from "./user";
 import Pagination from "./pagination";
 import { paginate } from "../utils/paginate";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const Users = ({users, ...rest}) => {
-    const counterUsers = users.length
-    const pageSize = 4
+const Users = ({ users, ...rest }) => {
+    const counterUsers = users.length;
+    const pageSize = 4;
 
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handlePageChange = (pageIndex) => {
-        console.log('page',pageIndex);
-        setCurrentPage(pageIndex)
-        }
+        setCurrentPage(pageIndex);
+    };
 
-    const userCrop = paginate (users, currentPage, pageSize)
+    const userCrop = paginate(users, currentPage, pageSize);
 
-    const table = 
-        <table class="table-info">
+    const table = (
+        <table className="table-info">
             <thead>
                 <tr>
                     <th scope="col">Имя</th>
@@ -31,39 +30,41 @@ const Users = ({users, ...rest}) => {
                 </tr>
             </thead>
             <tbody>
-                {
-                        userCrop.map(item=> {
-                           return(
-                            <>
-                                <User user = {item} rest = {rest} key={item._id}/>
-                            </>
-                           ) 
-                        })
-                }
-            </tbody>          
+                {userCrop.map((item) => {
+                    return (
+                        <>
+                            <User user={item} rest={rest} key={item._id} />
+                        </>
+                    );
+                })}
+            </tbody>
         </table>
+    );
 
     if (counterUsers === 0) {
-        return table.remove
+        return table.remove;
     }
 
-
-        return (
-            <>
-                {table}
-                <Pagination 
-                    itemsCount = {counterUsers} 
-                    pageSize = {pageSize} 
-                    currentPage = {currentPage}
-                    onPageChange = {handlePageChange} 
-                />
-            </>
-            )
-}
+    return (
+        <>
+            {table}
+            <Pagination
+                itemsCount={counterUsers}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
+        </>
+    );
+};
+Users.propTypes = {
+    users: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 User.propTypes = {
-    user: PropTypes.arrayOf(PropTypes.object).isRequired, 
-    rest: PropTypes.object.isRequired, 
-}
+    user: PropTypes.arrayOf(PropTypes.object).isRequired,
+    rest: PropTypes.object.isRequired,
+    counterUsers: PropTypes.number.isRequired
+};
 
-export default Users
+export default Users;

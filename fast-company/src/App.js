@@ -8,32 +8,34 @@ const App = () => {
     const [users, setUsers] = useState(api.users.fetchAll());
 
     const handleDelete = (userId) => {
-        setUsers(prevState => prevState.filter(item=>item._id !== userId))
-    }
+        setUsers((prevState) =>
+            prevState.filter((item) => item._id !== userId)
+        );
+    };
 
     const handleToggleBookmark = (userId) => {
-        let newArray = users.map(user => {
+        const newArray = users.map((user) => {
             if (userId === user._id) {
-                user.bookmark = !user.bookmark
-                return user
+                user.bookmark = !user.bookmark;
+                return user;
             } else {
-                return user
+                return user;
             }
-        })
+        });
 
-        setUsers(newArray)
-    }
+        setUsers(newArray);
+    };
 
     return (
         <>
-            <SearchStatus users = { users }/>
-            <Users 
-                users = { users } 
-                onDelete = { handleDelete } 
-                onToggleBookmark = {handleToggleBookmark}
+            <SearchStatus users={users} />
+            <Users
+                users={users}
+                onDelete={handleDelete}
+                onToggleBookmark={handleToggleBookmark}
             />
         </>
-    )
-}
+    );
+};
 
-export default App
+export default App;

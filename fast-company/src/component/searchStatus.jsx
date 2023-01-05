@@ -1,32 +1,39 @@
-import React, {useState} from "react";
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const SearchStatus = ({ users }) => {
-    let lengthUsers = users.length
+    const lengthUsers = users.length;
 
     const checkCorrectCount = (count) => {
-        const chelovek = [1,5,6,7,8,9,10,11,12]
-        const cheloveka = [2,3,4]
-        return (chelovek.includes(count)) ? 'человек':'человека'
-    }
+        const chelovek = [1, 5, 6, 7, 8, 9, 10, 11, 12];
+        return chelovek.includes(count) ? "человек" : "человека";
+    };
 
     const checkZero = (lengthUsers) => {
         if (lengthUsers === 0) {
-            return (<span className="badge bg-danger large mh-50 vw-50 ">{lengthUsers} {checkCorrectCount(lengthUsers)} тусанет с тобой сегодня</span>)
+            return (
+                <span className="badge bg-danger large mh-50 vw-50 ">
+                    {lengthUsers} {checkCorrectCount(lengthUsers)} тусанет с
+                    тобой сегодня
+                </span>
+            );
         } else {
-            return (<span className="badge bg-primary large mh-50 vw-50 ">{lengthUsers} {checkCorrectCount(lengthUsers)} тусанет с тобой сегодня</span>)
+            return (
+                <span className="badge bg-primary large mh-50 vw-50 ">
+                    {lengthUsers} {checkCorrectCount(lengthUsers)} тусанет с
+                    тобой сегодня
+                </span>
+            );
         }
-    }
+    };
 
-    const counterUsersComponent = (
-        checkZero(lengthUsers)
-    )
+    const counterUsersComponent = checkZero(lengthUsers);
 
-    return <h1>{counterUsersComponent}</h1>
-}
+    return <h1>{counterUsersComponent}</h1>;
+};
 
 SearchStatus.propTypes = {
-    users: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
+    users: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
-export default SearchStatus
+export default SearchStatus;
