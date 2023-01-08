@@ -11,22 +11,22 @@ const User = ({ user, ...rest }) => {
             <th>{user.name}</th>
 
             <th>
-                <tr>
+                <th>
                     <Qualitie qualities={user.qualities} key={user._id} />
-                </tr>
+                </th>
             </th>
             <th key={user.profession._id}>{user.profession.name}</th>
             <th>{user.completedMeetings}</th>
             <th>{user.rate}</th>
             <th>
-                <tr>
+                <th>
                     <Bookmark
                         bookmark={user.bookmark}
                         key={user._id}
                         id={user._id}
                         toggle={onToggleBookmark}
                     />
-                </tr>
+                </th>
             </th>
             <th>
                 <span key={user._id}>

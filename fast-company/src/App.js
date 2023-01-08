@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "./api";
-import Users from "./component/users2";
+import Users from "./component/usersList";
 import SearchStatus from "./component/searchStatus";
 import "bootstrap/dist/css/bootstrap.css";
 

@@ -31,11 +31,7 @@ const Users = ({ users, ...rest }) => {
             </thead>
             <tbody>
                 {userCrop.map((item) => {
-                    return (
-                        <>
-                            <User user={item} rest={rest} key={item._id} />
-                        </>
-                    );
+                    return <User user={item} rest={rest} key={item._id} />;
                 })}
             </tbody>
         </table>
@@ -59,12 +55,6 @@ const Users = ({ users, ...rest }) => {
 };
 Users.propTypes = {
     users: PropTypes.arrayOf(PropTypes.object).isRequired
-};
-
-User.propTypes = {
-    user: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rest: PropTypes.object.isRequired,
-    counterUsers: PropTypes.number.isRequired
 };
 
 export default Users;
