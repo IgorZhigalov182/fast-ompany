@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import User from "./user";
+import GroupList from "./groupList";
+import api from "../api";
+
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [professions] = useState(api.professions.fetchAll());
     const count = allUsers.length;
     const pageSize = 4;
 
@@ -13,8 +17,18 @@ const Users = ({ users: allUsers, ...rest }) => {
         console.log("page: ", pageIndex);
     };
     const usersCrop = paginate(allUsers, currentPage, pageSize);
+
+    const handleProfessionSelect = (a) => {
+        console.log(a);
+    };
+    console.log(professions.then());
+
     return (
         <>
+            <GroupList
+                items={professions}
+                onItemSelect={handleProfessionSelect}
+            />
             {count > 0 && (
                 <table className="table">
                     <thead>
