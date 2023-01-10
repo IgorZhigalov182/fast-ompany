@@ -11,7 +11,12 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    // const [loadedUsers, setLoadedUsers] = useState();
     const pageSize = 2;
+
+    // useEffect(() => {
+    //     allUsers.then((user) => setLoadedUsers(loadedUsers.push(user)));
+    // });
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));

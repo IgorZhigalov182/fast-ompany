@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Users from "./components/users";
-
 import api from "./api";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
                 return user;
             })
         );
-        console.log(id);
+        console.olg(id);
     };
     return (
         <div>
