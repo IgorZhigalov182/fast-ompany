@@ -14,10 +14,6 @@ const Users = ({ users: allUsers, ...rest }) => {
     // const [loadedUsers, setLoadedUsers] = useState();
     const pageSize = 2;
 
-    // useEffect(() => {
-    //     allUsers.then((user) => setLoadedUsers(loadedUsers.push(user)));
-    // });
-
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
