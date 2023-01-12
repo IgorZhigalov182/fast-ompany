@@ -8,7 +8,6 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    console.log(typeof items);
     if (typeof items === "object") {
         return (
             <ul className="list-group">
@@ -34,13 +33,13 @@ const GroupList = ({
                 <li
                     className={
                         "list-group-item" +
-                        (items[item] === selectedItem ? " active" : "")
+                        (item === selectedItem ? " active" : "")
                     }
-                    key={items[item][valueProperty]}
-                    onClick={() => onItemSelect(items[item])}
+                    key={item.valueProperty}
+                    onClick={() => onItemSelect(item)}
                     role="button"
                 >
-                    {items[item][contentProperty]}
+                    {item.contentProperty}
                 </li>
             ))}
         </ul>;
