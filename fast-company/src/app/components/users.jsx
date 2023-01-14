@@ -34,9 +34,8 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? loadedUsers.filter((user) => user.profession === selectedProf)
+        ? loadedUsers.filter((user) => user.profession._id === selectedProf._id)
         : loadedUsers;
-    // console.log(selectedProf);
     const count = filteredUsers.length;
 
     const usersCrop = paginate(filteredUsers, currentPage, pageSize);
