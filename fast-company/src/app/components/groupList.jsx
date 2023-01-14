@@ -26,8 +26,7 @@ const GroupList = ({
                 ))}
             </ul>
         );
-    }
-    if (Array.isArray(items)) {
+    } else if (Array.isArray(items)) {
         return (
             <ul className="list-group">
                 {items.map((item) => (
