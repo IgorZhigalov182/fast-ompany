@@ -28,21 +28,23 @@ const GroupList = ({
         );
     }
     if (Array.isArray(items)) {
-        <ul className="list-group">
-            {items.map((item) => (
-                <li
-                    className={
-                        "list-group-item" +
-                        (item === selectedItem ? " active" : "")
-                    }
-                    key={item.valueProperty}
-                    onClick={() => onItemSelect(item)}
-                    role="button"
-                >
-                    {item.contentProperty}
-                </li>
-            ))}
-        </ul>;
+        return (
+            <ul className="list-group">
+                {items.map((item) => (
+                    <li
+                        className={
+                            "list-group-item" +
+                            (item === selectedItem ? " active" : "")
+                        }
+                        key={item.valueProperty}
+                        onClick={() => onItemSelect(item)}
+                        role="button"
+                    >
+                        {item.contentProperty}
+                    </li>
+                ))}
+            </ul>
+        );
     }
 };
 

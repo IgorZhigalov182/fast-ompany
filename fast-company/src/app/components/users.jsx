@@ -11,13 +11,19 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    // const [loadedUsers, setLoadedUsers] = useState();
-    // const [, setUsers] = useState();
+    // const [, setAllUsers] = useState();
     const pageSize = 2;
 
+    // let [filteredUsers, setFilteredUsers] = useState();
     // useEffect(() => {
-    //     api.users.fetchAll().then((a) => setSelectedProf(a));
+    //     allUsers.then((a) => setAllUsers(a));
     // }, []);
+    useEffect(() => {
+        api.users.fetchAll().then((a) => {
+            console.log(a);
+            // return setFilteredUsers(a);
+        });
+    }, []);
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
@@ -31,11 +37,13 @@ const Users = ({ users: allUsers, ...rest }) => {
         setCurrentPage(pageIndex);
         console.log("page: ", pageIndex);
     };
+
     const filteredUsers = selectedProf
         ? allUsers.filter((user) => user.profession === selectedProf)
         : allUsers;
-    const count = filteredUsers.length;
 
+    const count = filteredUsers.length;
+    // console.log(filteredUsers);
     const usersCrop = paginate(filteredUsers, currentPage, pageSize);
 
     const handleProfessionSelect = (item) => {
@@ -79,11 +87,13 @@ const Users = ({ users: allUsers, ...rest }) => {
                                 <th />
                             </tr>
                         </thead>
+                        {/* {allUsers && ( */}
                         <tbody>
                             {usersCrop.map((user) => (
                                 <User {...rest} {...user} key={user._id} />
                             ))}
                         </tbody>
+                        {/* )} */}
                     </table>
                 )}
                 <div className="div d-flex justify-content-center">
