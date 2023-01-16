@@ -6,27 +6,25 @@ function App() {
     const [users, setUsers] = useState(api.users.fetchAll());
 
     useEffect(() => {
-        api.users.fetchAll().then((us) => {
-            return setUsers(us);
-        });
-    });
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
 
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
 
     const handleToggleBookMark = (id) => {
-        users.map((user) => {
-            if (user._id === id) {
-                return { ...user, bookmark: !user.bookmark };
-            }
-            return user;
-        });
+        setUsers(
+            users.map((user) => {
+                if (user._id === id) {
+                    console.log("Change bookmark bool", id);
+                    return { ...user, bookmark: !user.bookmark };
+                }
+                return user;
+            })
+        );
     };
 
-    // useEffect((id) => {
-    //     handleToggleBookMark(id);
-    // });
     return (
         <div>
             <Users
