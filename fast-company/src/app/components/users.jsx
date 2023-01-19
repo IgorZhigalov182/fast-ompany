@@ -6,6 +6,7 @@ import api from "../api";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
+
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
@@ -60,9 +61,7 @@ const Users = ({ users: allUsers, ...rest }) => {
             )}
             <div className="d-flex flex-column">
                 <SearchStatus length={count} />
-
                 {count > 0 && <UserTable users={usersCrop} {...rest} />}
-
                 <div className="d-flex justify-content-center">
                     <Pagination
                         itemsCount={count}
