@@ -27,7 +27,45 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && "button" }}
                         scope="col"
                     >
+                        {/* {selectedSort.path} */}
+                        {/* {columns[column].name}
+                        {console.log(selectedSort.order)} */}
+
+                        {/* {console.log(order)} */}
                         {columns[column].name}
+
+                        {columns[column].name === selectedSort.path ? (
+                            selectedSort.order === "desc" ? (
+                                <>
+                                    {columns[column].name}
+                                    {<i className="bi bi-caret-down-fill"></i>}
+                                </>
+                            ) : (
+                                <>
+                                    {columns[column].name}
+                                    {<i className="bi bi-caret-up-fill"></i>}
+                                </>
+                            )
+                        ) : null}
+
+                        {/* {columns[column].name === selectedSort ? (
+                            onSort.order === "abs" ? (
+                                <i className="bi bi-caret-down-fill"></i>
+                            ) : (
+                                <i className="bi bi-caret-up-fill"></i>
+                            )
+                        ) : null} */}
+
+                        {/* {columns[column].name === selectedSort ? (
+                            columns[column].name
+                        ) : (
+                            <i className="bi bi-caret-down-fill">
+                                {columns[column].name}
+                            </i>
+                        )} */}
+
+                        {/* <i className="bi bi-caret-down-fill"></i>
+                        <i className="bi bi-caret-up-fill"></i> */}
                     </th>
                 ))}
             </tr>
