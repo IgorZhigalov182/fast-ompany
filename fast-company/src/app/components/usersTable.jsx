@@ -35,6 +35,7 @@ const UserTable = ({
             )
         },
         delete: {
+            path: "",
             component: (user) => (
                 <button
                     onClick={() => onDelete(user._id)}
