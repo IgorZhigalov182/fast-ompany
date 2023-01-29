@@ -35,11 +35,11 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {columns[column].path === selectedSort.path ? (
                             selectedSort.order === "desc" ? (
                                 <>
-                                    <i className="bi bi-caret-down-fill"></i>
+                                    <i className="bi bi-caret-up-fill"></i>
                                 </>
                             ) : (
                                 <>
-                                    <i className="bi bi-caret-up-fill"></i>
+                                    <i className="bi bi-caret-down-fill"></i>
                                 </>
                             )
                         ) : null}
