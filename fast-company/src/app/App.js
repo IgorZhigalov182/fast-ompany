@@ -14,23 +14,27 @@ function App() {
                         aria-current="page"
                         to="/main"
                     >
-                        <Route render={Main} />
+                        Main
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/login">
-                        <Route render={Login} />
+                        Login
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/users">
-                        Users
-                        <Route path={"/users"} pathrender={<Users />} />
+                        Users {<br></br>}
                     </Link>
                 </li>
             </ul>
 
-            {/* <Users /> */}
+            <Route path="/main" component={Main} />
+            <Route path="/login" component={Login} />
+            <Route
+                path="/users/:usersId?"
+                render={(props) => <Users {...props} />}
+            />
         </>
     );
 }
