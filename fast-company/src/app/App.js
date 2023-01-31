@@ -32,7 +32,7 @@ function App() {
             <Route path="/main" component={Main} />
             <Route path="/login" component={Login} />
             <Route
-                path="/users/:usersId?"
+                path="/users/:userId?"
                 render={(props) => <Users {...props} />}
             />
         </>

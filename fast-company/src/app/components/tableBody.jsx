@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 const TableBody = ({ data, columns }) => {
     const renderContent = (item, column) => {
@@ -18,23 +18,30 @@ const TableBody = ({ data, columns }) => {
     };
 
     return (
-        <tbody>
-            {data.map((item) => (
-                <tr key={item._id}>
-                    {Object.keys(columns).map((column) =>
-                        column === "name" ? (
-                            <td key={column}>
-                                <Link path={`${column._id}`}>
+        <>
+            <tbody>
+                {data.map((item) => (
+                    <tr key={item._id}>
+                        {Object.keys(columns).map((column) =>
+                            column === "name" ? (
+                                <td key={column}>
+                                    <Link to={item._id}>
+                                        {/* <Route path={`/users/:${item._id}?`}> */}
+                                        {renderContent(item, column)}
+                                        {/* </Route> */}
+                                    </Link>
+                                </td>
+                            ) : (
+                                <td key={column}>
                                     {renderContent(item, column)}
-                                </Link>
-                            </td>
-                        ) : (
-                            <td key={column}>{renderContent(item, column)}</td>
-                        )
-                    )}
-                </tr>
-            ))}
-        </tbody>
+                                </td>
+                            )
+                        )}
+                    </tr>
+                ))}
+            </tbody>
+            {/* <Route to></Route> */}
+        </>
     );
 };
 

@@ -7,19 +7,35 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import User from "./user";
 
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
-
+    const [users, setUsers] = useState();
+    const [, setUserId] = useState();
     const pageSize = 8;
 
-    const [users, setUsers] = useState();
+    const params = useParams();
+    const history = useHistory();
+
+    console.log(history);
+
+    const { userId } = params;
+    console.log(userId);
+    // useEffect(() => {
+    //     setUserId(api.users.getById(userId).then());
+    // });
+    console.log(userId);
+
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
@@ -74,7 +90,9 @@ const Users = () => {
             setSelectedProf();
         };
 
-        return (
+        return userId ? (
+            <User id={userId} />
+        ) : (
             <div className="d-flex">
                 {professions && (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
