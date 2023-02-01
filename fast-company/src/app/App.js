@@ -29,7 +29,7 @@ function App() {
                 </li>
             </ul>
 
-            <Route path="/main" component={Main} />
+            <Route path="/main" exact component={Main} />
             <Route path="/login" component={Login} />
             <Route
                 path="/users/:userId?"

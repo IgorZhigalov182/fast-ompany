@@ -7,8 +7,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, Route } from "react-router-dom";
 import User from "./user";
 
 const Users = () => {
@@ -17,20 +16,19 @@ const Users = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    const [, setUserId] = useState();
+    // const [, setUserId] = useState();
     const pageSize = 8;
 
     const params = useParams();
-    const history = useHistory();
-
-    console.log(history);
+    // const history = useHistory();
 
     const { userId } = params;
-    console.log(userId);
+    // console.log(userId);
+    // const userID = match.params.userId;
+
     // useEffect(() => {
     //     setUserId(api.users.getById(userId).then());
     // });
-    console.log(userId);
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -39,6 +37,7 @@ const Users = () => {
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
+
     const handleToggleBookMark = (id) => {
         setUsers(
             users.map((user) => {
@@ -89,6 +88,10 @@ const Users = () => {
         const clearFilter = () => {
             setSelectedProf();
         };
+
+        {
+            <Route path={userId} render={(props) => <User {...props} />} />;
+        }
 
         return userId ? (
             <User id={userId} />
