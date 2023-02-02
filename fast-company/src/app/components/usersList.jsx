@@ -7,29 +7,20 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-import { useParams, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import User from "./user";
 
-const Users = () => {
+const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    // const [, setUserId] = useState();
     const pageSize = 8;
 
     const params = useParams();
-    // const history = useHistory();
 
     const { userId } = params;
-    // console.log(userId);
-    // const userID = match.params.userId;
-
-    // useEffect(() => {
-    //     setUserId(api.users.getById(userId).then());
-    // });
-
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
@@ -89,10 +80,6 @@ const Users = () => {
             setSelectedProf();
         };
 
-        {
-            <Route path={userId} render={(props) => <User {...props} />} />;
-        }
-
         return userId ? (
             <User id={userId} />
         ) : (
@@ -139,8 +126,8 @@ const Users = () => {
         return "loading";
     }
 };
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
