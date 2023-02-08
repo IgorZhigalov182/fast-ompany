@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from "react";
 import TextField from "../components/textField";
+import { validator } from "../utils/validator";
 
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        validate();
-    }, [data]);
-
-    const handleEmail = (e) => {
+    const handleChange = (e) => {
         setData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
     };
 
-    const validate = () => {
-        const errors = {};
-        for (const fieldName in data) {
-            if (data[fieldName].trim() === "") {
-                errors[fieldName] = `${fieldName} обязательна для заполнения`;
+    const validatorConfig = {
+        email: {
+            isRequired: {
+                message: "Электронная почта является обязательной"
+            }
+        },
+        password: {
+            isRequired: {
+                message: "Пароль является обязательным"
             }
         }
+    };
+
+    useEffect(() => {
+        validate();
+    }, [data]);
+
+    const validate = () => {
+        const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -39,16 +48,16 @@ const Login = () => {
                 <TextField
                     name={"email"}
                     value={data.email}
-                    onChange={handleEmail}
-                    label={"Электронная почта"}
+                    onChange={handleChange}
+                    label="Электронная почта"
                     error={errors.email}
                 />
                 <TextField
                     name={"password"}
                     value={data.password}
-                    onChange={handleEmail}
+                    onChange={handleChange}
                     type={"password"}
-                    label={"Пароль"}
+                    label="Пароль"
                     error={errors.password}
                 />
 
