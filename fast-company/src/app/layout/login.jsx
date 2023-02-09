@@ -49,6 +49,9 @@ const Login = () => {
         return Object.keys(errors).length === 0;
     };
 
+    // Нужна для того, чтобы реализовать отключение кнопки при некорректной валидации
+    const isValid = Object.keys(errors).length === 0;
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -57,41 +60,39 @@ const Login = () => {
     };
     return (
         <>
-            <form action="" onSubmit={handleSubmit}>
-                <TextField
-                    name={"email"}
-                    value={data.email}
-                    onChange={handleChange}
-                    label="Электронная почта"
-                    error={errors.email}
-                />
-                <TextField
-                    name={"password"}
-                    value={data.password}
-                    onChange={handleChange}
-                    type={"password"}
-                    label="Пароль"
-                    error={errors.password}
-                />
+            <div className="container mt-5 ">
+                <div className="row">
+                    <div className="col-md-6 offset-md-3 shadow p-4">
+                        <h3 className="mb-4">Login</h3>
+                        <form action="" onSubmit={handleSubmit}>
+                            <TextField
+                                name={"email"}
+                                value={data.email}
+                                onChange={handleChange}
+                                label="Электронная почта"
+                                error={errors.email}
+                            />
+                            <TextField
+                                name={"password"}
+                                value={data.password}
+                                onChange={handleChange}
+                                type={"password"}
+                                label="Пароль"
+                                error={errors.password}
+                            />
 
-                <button type="submit">Отправить</button>
-                <button type="reset">Сбросить</button>
-
-                <div>
-                    <div>
-                        <label htmlFor="radio1">
-                            Radio 1 {""}
-                            <input type="radio" id="radio1" name="radio" />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor="radio2">
-                            Radio 2 {""}
-                            <input type="radio" id="radio2" name="radio" />
-                        </label>
+                            <button
+                                type="submit"
+                                disabled={!isValid}
+                                className="btn btn-primary w-100 mx-auto"
+                            >
+                                Отправить
+                            </button>
+                            {/* <button type="reset">Сбросить</button> */}
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </>
     );
 };

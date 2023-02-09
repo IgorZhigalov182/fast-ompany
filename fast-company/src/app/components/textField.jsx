@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const TextField = ({ name, value, label, onChange, type, error }) => {
+    const [showPassword, setshowPassword] = useState(false);
+
+    const toggleShowPassword = () => {
+        setshowPassword((prevState) => !prevState);
+    };
+
+    const getInpitClasses = () => {
+        return "form-control " + (error ? "is-invalid" : "");
+    };
     return (
-        <div>
+        <div className="mb-4">
             <label htmlFor={name}>{label}</label>
-            <input
-                id={name}
-                type={type}
-                value={value}
-                name={name}
-                onChange={onChange}
-            />
-            {error && <p>{error}</p>}
+            <div className="input-group has-validation">
+                <input
+                    id={name}
+                    type={showPassword ? "text" : type}
+                    value={value}
+                    name={name}
+                    onChange={onChange}
+                    className={getInpitClasses()}
+                />
+                {type === "password" ? (
+                    <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        onClick={toggleShowPassword}
+                    >
+                        <i
+                            className={
+                                "bi bi-eye" + (showPassword ? "-slash" : "")
+                            }
+                        ></i>
+                    </button>
+                ) : null}
+                {error && <div className="invalid-feedback">{error}</div>}
+            </div>
         </div>
     );
 };
