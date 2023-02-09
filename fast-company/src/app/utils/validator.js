@@ -20,9 +20,13 @@ export function validator(data, config) {
         switch (validateMethod) {
             case "isRequired":
                 if (data.trim() === "") return config.message;
-
                 break;
 
+            case "isEmail": {
+                const emailRegExp = /^\S+@\S+\.\S+$/g;
+                if (!emailRegExp.test(data)) return config.message;
+                break;
+            }
             default:
                 break;
         }
@@ -34,8 +38,9 @@ export function validator(data, config) {
                 data[fieldName],
                 config[fieldName][validateMethod]
             );
-            // убираем undefinded из state
-            if (error) {
+            // убираем undefinded из state и убираем ошибку, связанную с тем, что в пустой форме
+            // возникает ошибка,связанная с валидацией
+            if (error && !errors[fieldName]) {
                 errors[fieldName] = error;
             }
         }
