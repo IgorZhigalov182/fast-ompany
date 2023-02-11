@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
-import QualitiesList from "./qualitiesList";
+import QualitiesList from "./ui/qualities/qualitiesList";
 import PropTypes from "prop-types";
 
 const User = ({ id }) => {

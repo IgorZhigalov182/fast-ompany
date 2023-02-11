@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- description
+    1) common - переиспользуемые компоненты
+    2) page - компоненты для страниц (которые отображаются в наших layout)
+    3) ui - непериспользуемые (конкретные компоненты, содержащие определенную информацию)
+    4) layouts - самый верхнний уровень абстракции
+
+
+ architecture -->

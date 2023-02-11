@@ -3,7 +3,7 @@ import Users from "./layout/users";
 import { Route, Redirect } from "react-router-dom";
 import Main from "./layout/main";
 import Login from "./layout/login";
-import NavBar from "./components/navBar";
+import NavBar from "./components/ui/navBar";
 
 function App() {
     return (
