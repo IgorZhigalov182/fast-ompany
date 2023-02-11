@@ -16,18 +16,11 @@ const UsersListPage = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    // const [searchUsers, setSearchUsers] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const pageSize = 8;
     const params = useParams();
 
     const { userId } = params;
-
-    // const handleChange = (e) => {
-    //     setSearchUsers(e.target.value);
-    //     setSelectedProf();
-    //     console.log(e.target.value);
-    // };
 
     const handleSearchQuery = ({ target }) => {
         setSearchQuery(target.value);
