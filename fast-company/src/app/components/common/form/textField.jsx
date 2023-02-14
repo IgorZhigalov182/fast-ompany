@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 const TextField = ({ name, value, label, onChange, type, error }) => {
     const [showPassword, setshowPassword] = useState(false);
 
+    // типизируем поля для того, чтобы добавлять из любого места
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
+
     const toggleShowPassword = () => {
         setshowPassword((prevState) => !prevState);
     };
@@ -20,7 +25,7 @@ const TextField = ({ name, value, label, onChange, type, error }) => {
                     type={showPassword ? "text" : type}
                     value={value}
                     name={name}
-                    onChange={onChange}
+                    onChange={handleChange}
                     className={getInpitClasses()}
                 />
                 {type === "password" ? (

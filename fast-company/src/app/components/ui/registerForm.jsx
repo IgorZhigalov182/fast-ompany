@@ -4,25 +4,29 @@ import TextField from "../common/form/textField";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
+import MultiSelectField from "../common/form/multiSelectField";
 
 const RegisterForm = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
         profession: "",
-        sex: "Male"
+        sex: "Male",
+        qualities: []
     });
+    const [qualities, setQualities] = useState({});
     const [professions, setProfession] = useState();
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
+        api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
 
-    const handleChange = (e) => {
+    const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [target.name]: target.value
         }));
     };
 
@@ -114,13 +118,21 @@ const RegisterForm = () => {
                     value={data.sex}
                     name="sex"
                 />
-                <button
-                    type="submit"
-                    disabled={!isValid}
-                    className="btn btn-primary w-100 mx-auto"
-                >
-                    Отправить
-                </button>
+                <MultiSelectField
+                    options={qualities}
+                    onChange={handleChange}
+                    name="qualities"
+                    label="Выберите ваши качества"
+                />
+                <div className="mb-4">
+                    <button
+                        type="submit"
+                        disabled={!isValid}
+                        className="btn btn-primary w-100 mx-auto"
+                    >
+                        Отправить
+                    </button>
+                </div>
                 {/* <button type="reset">Сбросить</button> */}
             </form>
         </>
