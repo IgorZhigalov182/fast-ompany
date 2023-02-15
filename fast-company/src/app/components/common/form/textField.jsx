@@ -1,34 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ name, value, label, onChange, type, error }) => {
-    const [showPassword, setshowPassword] = useState(false);
+const TextField = ({ label, type, name, value, onChange, error }) => {
+    const [showPassword, setShowPassword] = useState(false);
 
-    // типизируем поля для того, чтобы добавлять из любого места
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
-
-    const toggleShowPassword = () => {
-        setshowPassword((prevState) => !prevState);
+    const getInputClasses = () => {
+        return "form-control" + (error ? " is-invalid" : "");
     };
-
-    const getInpitClasses = () => {
-        return "form-control " + (error ? "is-invalid" : "");
+    const toggleShowPassword = () => {
+        setShowPassword((prevState) => !prevState);
     };
     return (
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
             <div className="input-group has-validation">
                 <input
-                    id={name}
                     type={showPassword ? "text" : type}
-                    value={value}
+                    id={name}
                     name={name}
+                    value={value}
                     onChange={handleChange}
-                    className={getInpitClasses()}
+                    className={getInputClasses()}
                 />
-                {type === "password" ? (
+                {type === "password" && (
                     <button
                         className="btn btn-outline-secondary"
                         type="button"
@@ -40,7 +37,7 @@ const TextField = ({ name, value, label, onChange, type, error }) => {
                             }
                         ></i>
                     </button>
-                ) : null}
+                )}
                 {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
@@ -49,13 +46,13 @@ const TextField = ({ name, value, label, onChange, type, error }) => {
 TextField.defaultProps = {
     type: "text"
 };
-
 TextField.propTypes = {
+    label: PropTypes.string,
+    type: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
-    type: PropTypes.string,
-    label: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string
 };
+
 export default TextField;

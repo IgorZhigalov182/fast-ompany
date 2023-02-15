@@ -16,7 +16,6 @@ const NavBar = () => {
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/users">
-                        {/* Users {<br></br>} */}
                         Users
                     </Link>
                 </li>

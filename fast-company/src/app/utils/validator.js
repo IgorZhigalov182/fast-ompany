@@ -1,51 +1,31 @@
-// data - {email:'', password:''}
-// fieldName - ('email', 'password')
-// data[fieldName] - значение email, значение password
-// config = {
-//     email: {
-//         isRequired: {
-//             message: "Email является обязательным"
-//         }
-//     },
-//     password: {
-//         isRequired: {
-//             message: "пароль является обязательным"
-//         }
-//     }
-// };
-
 export function validator(data, config) {
     const errors = {};
     function validate(validateMethod, data, config) {
         let statusValidate;
         switch (validateMethod) {
-            case "isRequired":
+            case "isRequired": {
                 if (typeof data === "boolean") {
                     statusValidate = !data;
                 } else {
                     statusValidate = data.trim() === "";
                 }
                 break;
-
+            }
             case "isEmail": {
                 const emailRegExp = /^\S+@\S+\.\S+$/g;
-
                 statusValidate = !emailRegExp.test(data);
                 break;
             }
-
             case "isCapitalSymbol": {
                 const capitalRegExp = /[A-Z]+/g;
                 statusValidate = !capitalRegExp.test(data);
                 break;
             }
-
             case "isContainDigit": {
                 const digitRegExp = /\d+/g;
                 statusValidate = !digitRegExp.test(data);
                 break;
             }
-
             case "min": {
                 statusValidate = data.length < config.value;
                 break;
@@ -62,14 +42,10 @@ export function validator(data, config) {
                 data[fieldName],
                 config[fieldName][validateMethod]
             );
-            // убираем undefinded из state и убираем ошибку, связанную с тем, что в пустой форме
-            // возникает ошибка,связанная с валидацией (Если ошибка поля найдена,
-            // то он не будет искать дальше и отобразит первую)
             if (error && !errors[fieldName]) {
                 errors[fieldName] = error;
             }
         }
     }
-
     return errors;
 }
