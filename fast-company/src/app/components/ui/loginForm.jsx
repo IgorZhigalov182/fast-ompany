@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
+// import * as yup from "yup";
 
 const LoginForm = () => {
     const [data, setData] = useState({
@@ -17,6 +18,34 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
+
+    // Для Yup
+
+    // const validateScheme = yup.object().shape({
+    //     password: yup
+    //         .string()
+    //         .required("Пароль обязателен для заполнения")
+    //         .matches(
+    //             /^(?=.*[A-Z])/,
+    //             "Пароль должен содержать хотя бы одну букву"
+    //         )
+    //         .matches(
+    //             /(?=.*[0-9])/,
+    //             "Пароль должен содержать хотя бы одно число"
+    //         )
+    //         .matches(
+    //             /(?=.*[!@#$%&*^])/,
+    //             "Пароль должен содержать один из специальных символов !@#$%&*^ "
+    //         )
+    //         .matches(
+    //             /(?=.{8,})/,
+    //             "пароль должен состоять как минимум из 8 символов"
+    //         ),
+    //     email: yup
+    //         .string()
+    //         .required("Электронная почта обязательна для заполнения")
+    //         .email("Email введён некорректно")
+    // });
 
     const validatorConfig = {
         email: {
@@ -50,6 +79,11 @@ const LoginForm = () => {
 
     const validate = () => {
         const errors = validator(data, validatorConfig);
+
+        // validateScheme
+        //     .validate(data)
+        //     .then(() => setErrors({}))
+        //     .catch((err) => setErrors({ [err.path]: err.message }));
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
