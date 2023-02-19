@@ -5,7 +5,8 @@ import Main from "./layout/main";
 import Login from "./layout/login";
 import NavBar from "./components/ui/navBar";
 import RegisterForm from "./components/ui/registerForm";
-import Test from "./components/test";
+// import Test from "./components/test";
+import ChangeDataForm from "./components/changeDataForm";
 
 function App() {
     return (
@@ -18,18 +19,15 @@ function App() {
                 render={(props) => <Users {...props} />}
                 exact
             />
-            <Route
-                path="/users/:userId?/edit"
-                // render={(props) => <Test {...props} />}
-                render={(props) => <Test {...props} />}
-                // render={<Test />}
-            />
-            <Route path="/users/login/register" render={<RegisterForm />} />
-            {/* <Route path="/users/:userId?/edit" render={<Test />} /> */}
             {/* <Route
-                path="/users/:userId/edit"
+                path="/users/:userId?/edit"
                 render={(props) => <Test {...props} />}
             /> */}
+            <Route
+                path="/users/:userId?/edit"
+                render={(props) => <ChangeDataForm {...props} />}
+            />
+            <Route path="/users/login/register" render={<RegisterForm />} />
 
             <Redirect to="/" />
         </>
