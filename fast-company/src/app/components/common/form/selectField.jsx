@@ -11,6 +11,9 @@ const SelectField = ({
     name
 }) => {
     const handleChange = ({ target }) => {
+        console.log(target);
+        // const naming = document.querySelector(`.form-select`);
+        // const professionName = naming.options[naming.selectedIndex].text;
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
@@ -37,7 +40,8 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray > 0 &&
+                {optionsArray &&
+                    optionsArray.length > 0 &&
                     optionsArray.map((option) => (
                         <option value={option.value} key={option.value}>
                             {option.label}
