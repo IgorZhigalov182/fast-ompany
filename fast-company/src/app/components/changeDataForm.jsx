@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import TextField from "./common/form/textField";
 import RadioField from "./common/form/radioField";
 import MultiSelectField from "./common/form/multiSelectField";
 import SelectField from "./common/form/selectField";
 import api from "../api";
 import { validator } from "../utils/validator";
-// import { useHistory } from "react-router-dom";
 
 const ChangeDataForm = () => {
     const [data, setData] = useState({});
@@ -15,7 +14,7 @@ const ChangeDataForm = () => {
     const [professions, setProfession] = useState([]);
 
     const { userId } = useParams();
-    // const history = useHistory();
+    const history = useHistory();
 
     console.log("данные", data);
 
@@ -132,12 +131,12 @@ const ChangeDataForm = () => {
         api.users
             .update(userId, {
                 ...data,
-                profession: getProfessionById(data.profession._id),
+                profession: getProfessionById(data.profession),
                 qualities: getQualities(data.qualities)
             })
             .then((data) => {
-                // history.push(`users/${data._id}`);
-                console.log("21222", data);
+                console.log(history.location.pathname);
+                history.goBack();
             });
     };
 
@@ -178,6 +177,7 @@ const ChangeDataForm = () => {
                             label="Выберите вашу профессию"
                             error={errors.profession}
                             value={data.profession}
+                            name="profession"
                         />
 
                         <RadioField

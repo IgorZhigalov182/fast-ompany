@@ -19,15 +19,14 @@ function App() {
                 render={(props) => <Users {...props} />}
                 exact
             />
-            {/* <Route
-                path="/users/:userId?/edit"
-                render={(props) => <Test {...props} />}
-            /> */}
             <Route
                 path="/users/:userId?/edit"
                 render={(props) => <ChangeDataForm {...props} />}
             />
-            <Route path="/users/login/register" render={<RegisterForm />} />
+            <Route
+                path="/users/login/register"
+                render={() => <RegisterForm />}
+            />
 
             <Redirect to="/" />
         </>
