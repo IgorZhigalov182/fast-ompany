@@ -124,8 +124,20 @@ const EditUserPage = () => {
         return Object.keys(errors).length === 0;
     };
     const isValid = Object.keys(errors).length === 0;
+
+    const handleBack = () => {
+        history.goBack();
+    };
+
     return (
         <div className="container mt-5">
+            <button
+                className="btn btn-primary"
+                onClick={handleBack}
+                style={{ width: "8rem", height: "2.5rem" }}
+            >
+                Назад
+            </button>
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
                     {!isLoading && Object.keys(professions).length > 0 ? (

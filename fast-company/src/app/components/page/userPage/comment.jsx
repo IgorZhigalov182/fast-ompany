@@ -1,6 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Comment = () => {
+const Comment = ({ infoComment }) => {
+    // console.log("pageId", infoComment);
+
+    // useEffect(() => {
+    //     api.users.getById(userId).then((data) => setUser(data));
+    // }, []);
+
+    // console.log(infoComment.userId);
+    const arrayForName = JSON.parse(localStorage.getItem("users"));
+
+    const nameAuthorComment = arrayForName.filter(
+        (user) => user._id === infoComment.userId
+    );
+    // console.log(JSON.parse(localStorage.getItem("users")));
+
+    const datePresent = new Date(+infoComment.created_at);
+    console.log(datePresent);
+
     return (
         <div className="bg-light card-body  mb-3">
             <div className="row">
@@ -22,9 +40,9 @@ const Comment = () => {
                             <div className="mb-4">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <p className="mb-1 ">
-                                        {"//User Name"}
+                                        {nameAuthorComment[0].name}
                                         <span className="small">
-                                            {"//Published Time"}
+                                            {infoComment.created_at}
                                         </span>
                                     </p>
                                     <button className="btn btn-sm text-primary d-flex align-items-center">
@@ -32,7 +50,7 @@ const Comment = () => {
                                     </button>
                                 </div>
                                 <p className="small mb-0">
-                                    {"//Comment content"}
+                                    {infoComment.content}
                                 </p>
                             </div>
                         </div>
@@ -41,6 +59,10 @@ const Comment = () => {
             </div>
         </div>
     );
+};
+
+Comment.propTypes = {
+    infoComment: PropTypes.string.isRequired
 };
 
 export default Comment;

@@ -4,9 +4,12 @@ import api from "../../../api";
 import Qualities from "../../ui/qualities";
 import { useHistory } from "react-router-dom";
 import CommentsListComponent from "./commentsListComponent";
+// import api from "../../../api/fake.api/comments.api";
+import commentsApi from "../../../api/fake.api/comments.api";
 
 const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
+    const [idComments, setIdComments] = useState();
 
     const history = useHistory();
 
@@ -26,6 +29,14 @@ const UserPage = ({ userId }) => {
     // Создание url для проверки на наличие /edit внутри
     // const pathURL = history.location.pathname;
     // console.log(user);
+
+    useEffect(() => {
+        commentsApi.fetchCommentsForUser(userId).then((comment) => {
+            setIdComments(comment);
+        });
+    }, []);
+
+    console.log(idComments);
 
     if (user) {
         return (
@@ -100,7 +111,7 @@ const UserPage = ({ userId }) => {
                     </div>
 
                     <div className="col-md-8 mb-3">
-                        <CommentsListComponent />
+                        <CommentsListComponent comments={idComments} />
                     </div>
                 </div>
             </div>

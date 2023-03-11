@@ -5,8 +5,7 @@ import Main from "./layout/main";
 import Login from "./layout/login";
 import NavBar from "./components/ui/navBar";
 import RegisterForm from "./components/ui/registerForm";
-// import Test from "./components/test";
-import ChangeDataForm from "./components/changeDataForm";
+import EditUserPage from "./components/page/editUserPage";
 
 function App() {
     return (
@@ -21,7 +20,7 @@ function App() {
             />
             <Route
                 path="/users/:userId?/edit"
-                render={(props) => <ChangeDataForm {...props} />}
+                render={(props) => <EditUserPage {...props} />}
             />
             <Route
                 path="/users/login/register"
