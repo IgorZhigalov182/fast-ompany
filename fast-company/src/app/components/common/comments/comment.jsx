@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import API from "../../../api";
 import PropTypes from "prop-types";
 import { displayDate } from "../../../utils/displayDate";
-
+import API from "../../../api";
 const Comment = ({
     content,
     created_at: created,
@@ -12,7 +11,6 @@ const Comment = ({
 }) => {
     const [user, setUser] = useState();
     const [isLoading, setIsLoading] = useState(false);
-
     useEffect(() => {
         setIsLoading(true);
         API.users.getById(userId).then((data) => {
@@ -44,10 +42,9 @@ const Comment = ({
                                 <div className="mb-4">
                                     <div className="d-flex justify-content-between align-items-center">
                                         <p className="mb-1 ">
-                                            {user && user.name}
-                                            {""}
+                                            {user && user.name}{" "}
                                             <span className="small">
-                                                {displayDate(created)}
+                                                - {displayDate(created)}
                                             </span>
                                         </p>
                                         <button
@@ -67,12 +64,13 @@ const Comment = ({
         </div>
     );
 };
-
 Comment.propTypes = {
-    content: PropTypes,
-    created_at: PropTypes,
-    _id: PropTypes.string,
+    content: PropTypes.string,
+    edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     userId: PropTypes.string,
-    onRemove: PropTypes.func
+    onRemove: PropTypes.func,
+    _id: PropTypes.string
 };
+
 export default Comment;
