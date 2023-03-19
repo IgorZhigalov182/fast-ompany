@@ -1,6 +1,5 @@
 import React from "react";
 import Qualities from "./qualities";
-
 import PropTypes from "prop-types";
 
 const QualitiesCard = ({ data }) => {
@@ -17,7 +16,6 @@ const QualitiesCard = ({ data }) => {
         </div>
     );
 };
-
 QualitiesCard.propTypes = {
     data: PropTypes.array
 };

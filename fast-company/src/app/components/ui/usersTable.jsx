@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
+
 const UserTable = ({
     users,
-    selectedSort,
     onSort,
+    selectedSort,
     onToggleBookMark,
     onDelete,
-    // searchByName,
     ...rest
 }) => {
     const columns = {
@@ -42,7 +43,6 @@ const UserTable = ({
             )
         },
         delete: {
-            path: "",
             component: (user) => (
                 <button
                     onClick={() => onDelete(user._id)}
@@ -53,8 +53,6 @@ const UserTable = ({
             )
         }
     };
-    // console.log(Object.values(users));
-
     return (
         <Table
             onSort={onSort}
@@ -71,7 +69,6 @@ UserTable.propTypes = {
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired
-    // searchByName: PropTypes.string
 };
 
 export default UserTable;
