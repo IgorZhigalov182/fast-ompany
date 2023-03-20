@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import { useProfessions } from "../../hooks/useProfession";
 
 const Profession = ({ id, isLoading }) => {
-    console.log(id);
+    // console.log(id);
     const { getProfession } = useProfessions();
     const prof = getProfession(id);
-    console.log(prof.name);
+    // console.log(prof.name);
     if (!isLoading) {
         return <p>{prof.name}</p>;
     } else {
