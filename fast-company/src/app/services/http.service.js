@@ -4,10 +4,13 @@ import configFile from "../config.json";
 
 axios.defaults.baseURL = configFile.apiEndpoint;
 
-axios.interceptors.response.use(
+axios.interceptors.request.use(
     function (config) {
-        config.url = config.url.slice(0, -1) + ".json";
-        console.log(config.url);
+        if (configFile.isFireBase) {
+            const containSlash = /\/$/gi.test(config.url);
+            config.url =
+                (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
+        }
         return config;
     },
     function (error) {
@@ -15,8 +18,24 @@ axios.interceptors.response.use(
     }
 );
 
+function transformData(data) {
+    return data
+        ? Object.keys(
+              data.map((key) => ({
+                  ...data[key]
+              }))
+          )
+        : [];
+}
+
 axios.interceptors.response.use(
-    (res) => res,
+    (res) => {
+        if (configFile.isFireBase) {
+            res.data = { content: transformData(res.data) };
+            console.log(res.data);
+        }
+        return res;
+    },
     function (error) {
         const expectedErrors =
             error.response &&
