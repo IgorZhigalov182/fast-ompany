@@ -17,22 +17,17 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
 function transformData(data) {
     return data
-        ? Object.keys(
-              data.map((key) => ({
-                  ...data[key]
-              }))
-          )
+        ? Object.keys(data).map((key) => ({
+              ...data[key]
+          }))
         : [];
 }
-
 axios.interceptors.response.use(
     (res) => {
         if (configFile.isFireBase) {
             res.data = { content: transformData(res.data) };
-            console.log(res.data);
         }
         return res;
     },
@@ -43,8 +38,8 @@ axios.interceptors.response.use(
             error.response.status < 500;
 
         if (!expectedErrors) {
-            // console.log(error);
-            toast.error("Somthing was wrong. Try it later");
+            console.log(error);
+            toast.error("Something was wrong. Try it later");
         }
         return Promise.reject(error);
     }
