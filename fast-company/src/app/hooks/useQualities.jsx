@@ -34,6 +34,7 @@ export const QualitiesProvider = ({ children }) => {
         const { message } = error.response.data;
         setError(message);
     }
+
     useEffect(() => {
         if (error !== null) {
             toast(error);
