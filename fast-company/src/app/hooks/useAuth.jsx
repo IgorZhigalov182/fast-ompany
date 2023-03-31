@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
 import { toast } from "react-toastify";
-import { setTokens } from "../services/localStorage.service";
+import setTokens from "../services/localStorage.service";
 
 const httpAuth = axios.create();
 const AuthContext = React.createContext();
@@ -13,7 +13,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState({});
+    const [currentUser, setUser] = useState({});
     const [error, setError] = useState(null);
 
     async function signUp({ email, password, ...rest }) {
@@ -26,9 +26,7 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-            // setTokens(data);
             await createUser({ _id: data.localId, email, ...rest });
-            console.log(data);
         } catch (error) {
             errorCatcher(error);
             const { code, message } = error.response.data.error;
@@ -41,7 +39,33 @@ const AuthProvider = ({ children }) => {
                     throw errorObject;
                 }
             }
-            // throw new Error();
+            // throw new Error
+        }
+    }
+
+    async function logIn({ email, password }) {
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`;
+
+        try {
+            const { data } = await httpAuth.post(url, {
+                email,
+                password,
+                returnSecureToken: true
+            });
+            console.log(data);
+            // setTokens(data);
+            await findUser({ _id: data.localId, email });
+        } catch (error) {
+            errorCatcher(error);
+            const { message, code } = error.response.data.error;
+            if (code === 400) {
+                if (message === "INVALID_PASSWORD") {
+                    const errorObject = {
+                        email: "Неправильный пароль"
+                    };
+                    throw errorObject;
+                }
+            }
         }
     }
 
@@ -59,15 +83,31 @@ const AuthProvider = ({ children }) => {
 
     async function createUser(data) {
         try {
+            console.log(data);
             const { content } = userService.create(data);
-            setCurrentUser(content);
+            setUser(content);
+            console.log(content);
         } catch (error) {
             errorCatcher(error);
         }
     }
 
+    async function findUser(data) {
+        try {
+            console.log("data", data);
+            const { content } = await userService.get();
+            setUser(content);
+            // const user = content.filter(
+            //     (obj) => obj._id === "W1nlGf4OvcXE95jMH56Bv8P46ND3"
+            // );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ signUp, currentUser }}>
+        // , logIn
+        <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
             {children}
         </AuthContext.Provider>
     );

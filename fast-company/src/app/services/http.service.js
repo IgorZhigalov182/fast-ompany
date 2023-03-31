@@ -2,7 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import configFile from "../config.json";
 
-// Создание инстанса http
 const http = axios.create({
     baseURL: configFile.apiEndpoint
 });
