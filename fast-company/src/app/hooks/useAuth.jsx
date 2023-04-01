@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
 import { toast } from "react-toastify";
-import setTokens from "../services/localStorage.service";
+import { setTokens } from "../services/localStorage.service";
 
-const httpAuth = axios.create();
+const httpAuth = axios.create({
+    baseURL: "https://identitytoolkit.googleapis.com/v1/",
+    params: {
+        key: process.env.REACT_APP_FIREBASE_KEY
+    }
+});
 const AuthContext = React.createContext();
 
 export const useAuth = () => {
@@ -17,10 +22,8 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     async function signUp({ email, password, ...rest }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
-
         try {
-            const { data } = await httpAuth.post(url, {
+            const { data } = await httpAuth.post(`accounts:signUp`, {
                 email,
                 password,
                 returnSecureToken: true
@@ -44,26 +47,28 @@ const AuthProvider = ({ children }) => {
     }
 
     async function logIn({ email, password }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`;
-
         try {
-            const { data } = await httpAuth.post(url, {
-                email,
-                password,
-                returnSecureToken: true
-            });
-            console.log(data);
-            // setTokens(data);
-            await findUser({ _id: data.localId, email });
+            const { data } = await httpAuth.post(
+                `accounts:signInWithPassword`,
+                {
+                    email,
+                    password,
+                    returnSecureToken: true
+                }
+            );
+            setTokens(data);
+            // await findUser({ _id: data.localId, email });
         } catch (error) {
             errorCatcher(error);
             const { message, code } = error.response.data.error;
             if (code === 400) {
-                if (message === "INVALID_PASSWORD") {
-                    const errorObject = {
-                        email: "Неправильный пароль"
-                    };
-                    throw errorObject;
+                switch (message) {
+                    case "INVALID_PASSWORD":
+                        throw new Error("Email или пароль введены некорректно");
+                    default:
+                        throw new Error(
+                            "Слишком много попыток входа. Попробуйте зайти позже"
+                        );
                 }
             }
         }
@@ -81,32 +86,39 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
 
+    // мой
     async function createUser(data) {
         try {
-            console.log(data);
-            const { content } = userService.create(data);
+            const { content } = await userService.create(data);
             setUser(content);
-            console.log(content);
         } catch (error) {
             errorCatcher(error);
         }
     }
 
-    async function findUser(data) {
-        try {
-            console.log("data", data);
-            const { content } = await userService.get();
-            setUser(content);
-            // const user = content.filter(
-            //     (obj) => obj._id === "W1nlGf4OvcXE95jMH56Bv8P46ND3"
-            // );
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // async function createUser(data) {
+    //     try {
+    //         const { content } = userService.create(data);
+    //         setUser(content);
+    //     } catch (error) {
+    //         errorCatcher(error);
+    //     }
+    // }
+
+    // async function findUser(data) {
+    //     try {
+    //         console.log("data", data);
+    //         const { content } = await userService.get();
+    //         setUser(content);
+    //         // const user = content.filter(
+    //         //     (obj) => obj._id === "W1nlGf4OvcXE95jMH56Bv8P46ND3"
+    //         // );
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     return (
-        // , logIn
         <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
             {children}
         </AuthContext.Provider>
