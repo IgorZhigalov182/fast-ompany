@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import localStorageService, {
     setTokens
 } from "../services/localStorage.service";
+import { useHistory } from "react-router-dom";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -22,6 +23,8 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -35,11 +38,16 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-            getUserData();
+            // getUserData();
             await createUser({
                 _id: data.localId,
                 email,
                 rate: randomInt(1, 5),
+                image: `https://avatars.dicebear.com/api/avataaars/${(
+                    Math.random() + 1
+                )
+                    .toString(36)
+                    .substring(7)}.svg`,
                 completedMeetings: randomInt(0, 200),
                 ...rest
             });
@@ -59,6 +67,12 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    function logOut() {
+        localStorageService.removeAuthData();
+        setUser(null);
+        history.push("/");
+    }
+
     async function logIn({ email, password }) {
         try {
             const { data } = await httpAuth.post(
@@ -70,6 +84,7 @@ const AuthProvider = ({ children }) => {
                 }
             );
             setTokens(data);
+            await getUserData();
         } catch (error) {
             errorCatcher(error);
             const { message, code } = error.response.data.error;
@@ -105,12 +120,16 @@ const AuthProvider = ({ children }) => {
             setUser(content);
         } catch (error) {
             errorCatcher();
+        } finally {
+            setLoading(false);
         }
     }
     // При загрузке страницы из localStorage берём токен и вызываем фу-ю подтягивания пользователя по id
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -148,8 +167,8 @@ const AuthProvider = ({ children }) => {
     // }
 
     return (
-        <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
-            {children}
+        <AuthContext.Provider value={{ signUp, currentUser, logIn, logOut }}>
+            {!isLoading ? children : "loading..."}
         </AuthContext.Provider>
     );
 };

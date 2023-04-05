@@ -13,6 +13,7 @@ const LoginForm = () => {
         stayOn: false
     });
     const [errors, setErrors] = useState({});
+    // console.log();
     const [enterError, setEnterError] = useState(null);
     const { logIn } = useAuth();
 
@@ -52,7 +53,11 @@ const LoginForm = () => {
         if (!isValid) return;
         try {
             await logIn(data);
-            history.push("/");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (error) {
             setEnterError(error.message);
         }
