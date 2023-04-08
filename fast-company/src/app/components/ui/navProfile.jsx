@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const NavProfile = () => {
     const [isOpen, setOpen] = useState(false);
     const { currentUser } = useAuth();
-    console.log(currentUser);
 
     const toggleMenu = () => {
         setOpen(!isOpen);
