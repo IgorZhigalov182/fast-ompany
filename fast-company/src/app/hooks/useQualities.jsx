@@ -26,6 +26,7 @@ export const QualitiesProvider = ({ children }) => {
         };
         getQualities();
     }, []);
+
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id);
     };
