@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { displayDate } from "../../../utils/displayDate";
 import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
-
 const Comment = ({
     content,
     created_at: created,
@@ -12,7 +11,6 @@ const Comment = ({
     onRemove
 }) => {
     const { getUserById } = useUser();
-    // const currentUser = useAuth();
     const { currentUser } = useAuth();
     const user = getUserById(userId);
 

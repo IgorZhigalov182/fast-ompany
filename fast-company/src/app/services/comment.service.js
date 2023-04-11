@@ -23,5 +23,4 @@ const commentService = {
         return data;
     }
 };
-
 export default commentService;

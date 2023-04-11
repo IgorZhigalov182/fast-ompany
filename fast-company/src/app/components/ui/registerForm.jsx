@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
-// import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
@@ -24,19 +23,15 @@ const RegisterForm = () => {
     });
     const { signUp } = useAuth();
     const { qualities } = useQualities();
-    const { professions } = useProfessions();
-    // console.log(professions);
-
-    const professionList = professions.map((p) => ({
-        label: p.name,
-        value: p._id
-    }));
-
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
     }));
-
+    const { professions } = useProfessions();
+    const professionsList = professions.map((p) => ({
+        label: p.name,
+        value: p._id
+    }));
     const [errors, setErrors] = useState({});
 
     const handleChange = (target) => {
@@ -59,7 +54,7 @@ const RegisterForm = () => {
                 message: "Имя обязательно для заполнения"
             },
             min: {
-                message: "Имя должно состоять минимум 3 символа",
+                message: "Имя должно состоять минимум из 3 символов",
                 value: 3
             }
         },
@@ -144,7 +139,7 @@ const RegisterForm = () => {
             <SelectField
                 label="Выбери свою профессию"
                 defaultOption="Choose..."
-                options={professionList}
+                options={professionsList}
                 name="profession"
                 onChange={handleChange}
                 value={data.profession}

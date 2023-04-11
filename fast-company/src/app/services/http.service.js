@@ -14,8 +14,6 @@ http.interceptors.request.use(
             const containSlash = /\/$/gi.test(config.url);
             config.url =
                 (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
-
-            // Обновление Токена
             const expiresDate = localStorageService.getTokenExpiresDate();
             const refreshToken = localStorageService.getRefreshToken();
             if (refreshToken && expiresDate < Date.now()) {
@@ -23,7 +21,7 @@ http.interceptors.request.use(
                     grant_type: "refresh_token",
                     refresh_token: refreshToken
                 });
-                // трансформ данных для корректной передачи (по документации fireBase)
+
                 localStorageService.setTokens({
                     refreshToken: data.refresh_token,
                     idToken: data.id_token,
@@ -31,7 +29,6 @@ http.interceptors.request.use(
                     localId: data.user_id
                 });
             }
-            // Передача accessToken(idToken (fireBase))
             const accessToken = localStorageService.getAccessToken();
             if (accessToken) {
                 config.params = { ...config.params, auth: accessToken };
@@ -74,6 +71,7 @@ const httpService = {
     get: http.get,
     post: http.post,
     put: http.put,
-    delete: http.delete
+    delete: http.delete,
+    patch: http.patch
 };
 export default httpService;

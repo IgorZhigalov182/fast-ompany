@@ -1,10 +1,10 @@
 import { orderBy } from "lodash";
 import React from "react";
 import CommentsList, { AddCommentForm } from "../common/comments";
-import { UseComments } from "../../hooks/useComments";
+import { useComments } from "../../hooks/useComments";
 
 const Comments = () => {
-    const { comments, createComment, removeComment } = UseComments();
+    const { createComment, comments, removeComment } = useComments();
 
     const handleSubmit = (data) => {
         createComment(data);

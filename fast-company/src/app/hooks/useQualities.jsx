@@ -26,7 +26,6 @@ export const QualitiesProvider = ({ children }) => {
         };
         getQualities();
     }, []);
-
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id);
     };
@@ -35,7 +34,6 @@ export const QualitiesProvider = ({ children }) => {
         const { message } = error.response.data;
         setError(message);
     }
-
     useEffect(() => {
         if (error !== null) {
             toast(error);

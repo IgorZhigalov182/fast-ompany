@@ -6,17 +6,15 @@ import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
-    const history = useHistory();
     const [data, setData] = useState({
         email: "",
         password: "",
         stayOn: false
     });
-    const [errors, setErrors] = useState({});
-    // console.log();
-    const [enterError, setEnterError] = useState(null);
+    const history = useHistory();
     const { logIn } = useAuth();
-
+    const [errors, setErrors] = useState({});
+    const [enterError, setEnterError] = useState(null);
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -51,8 +49,10 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
+
         try {
             await logIn(data);
+
             history.push(
                 history.location.state
                     ? history.location.state.from.pathname

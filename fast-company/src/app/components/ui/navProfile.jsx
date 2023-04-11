@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-
-const NavProfile = () => {
-    const [isOpen, setOpen] = useState(false);
+import { useAuth } from "../../hooks/useAuth";
+function NavProfile() {
     const { currentUser } = useAuth();
-
+    const [isOpen, setOpen] = useState(false);
     const toggleMenu = () => {
-        setOpen(!isOpen);
-        // setOpen((prevState) => !prevState);
+        setOpen((prevState) => !prevState);
     };
     return (
         <div className="dropdown" onClick={toggleMenu}>
@@ -18,7 +15,7 @@ const NavProfile = () => {
                     src={currentUser.image}
                     alt=""
                     height="40"
-                    className="img-responsive rounded-cirlce"
+                    className="img-responsive rounded-circle"
                 />
             </div>
             <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
@@ -28,12 +25,12 @@ const NavProfile = () => {
                 >
                     Profile
                 </Link>
-                <Link to={`/logout`} className="dropdown-item">
-                    Logout
+                <Link to="/logout" className="dropdown-item">
+                    Log Out
                 </Link>
             </div>
         </div>
     );
-};
+}
 
 export default NavProfile;
