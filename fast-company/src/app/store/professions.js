@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import professionService from "../services/profession.service";
+import isOutdated from "../utils/isOutdated";
 
 const professionsSlice = createSlice({
     name: "professions",
@@ -15,8 +16,8 @@ const professionsSlice = createSlice({
         },
         professionsReceived: (state, action) => {
             state.entities = action.payload;
-            state.isLoading = false;
             state.lastFetch = Date.now();
+            state.isLoading = false;
         },
         professionsRequestFailed: (state, action) => {
             state.error = action.payload;
@@ -29,19 +30,12 @@ const { reducer: professionsReducer, actions } = professionsSlice;
 const { professionsRequested, professionsReceived, professionsRequestFailed } =
     actions;
 
-function isOutdated(date) {
-    if (Date.now() - date > 10 * 60 * 1000) {
-        return true;
-    }
-    return false;
-}
-
 export const loadProfessionsList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().professions;
     if (isOutdated(lastFetch)) {
         dispatch(professionsRequested());
         try {
-            const { content } = await professionService.fetchAll();
+            const { content } = await professionService.get();
             dispatch(professionsReceived(content));
         } catch (error) {
             dispatch(professionsRequestFailed(error.message));
@@ -50,24 +44,12 @@ export const loadProfessionsList = () => async (dispatch, getState) => {
 };
 
 export const getProfessions = () => (state) => state.professions.entities;
-
 export const getProfessionsLoadingStatus = () => (state) =>
-    state.qualities.isLoading;
-
-export const getProfessionsByIds = (professionsIds) => (state) => {
-    // console.log(professionsIds);
-    // console.log(state.professions.entities);
-    const professionsArray = [];
-
+    state.professions.isLoading;
+export const getProfessionById = (id) => (state) => {
     if (state.professions.entities) {
-        const profArr = state.professions.entities;
-        profArr.forEach((prof) => {
-            if (prof._id === professionsIds) {
-                professionsArray.push(prof);
-            }
-        });
+        return state.professions.entities.find((p) => p._id === id);
     }
-    return professionsArray;
 };
 
 export default professionsReducer;
