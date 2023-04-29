@@ -57,6 +57,17 @@ const usersSlice = createSlice({
             state.isLoggedIn = false;
             state.auth = null;
             state.dataLoaded = false;
+        },
+        userUpdateSuccess: (state, action) => {
+            const userIndex = state.entities.findIndex(
+                (user) => user._id === action.payload._id
+            );
+
+            state.entities[userIndex] = action.payload;
+
+            // const userId = action.payload._id;
+            // console.log(state.entities[0]);
+            // console.log(action.payload.users);
         }
     }
 });
@@ -69,12 +80,15 @@ const {
     authRequestSuccess,
     authRequestFailed,
     userCreated,
-    userLoggedOut
+    userLoggedOut,
+    userUpdateSuccess
 } = actions;
 
 const authRequested = createAction("users/authRequested");
 const userCreateRequested = createAction("users/userCreateRequested");
 const createUserFailed = createAction("users/createUserFailed");
+const userUpdateRequested = createAction("user/userUpdateRequested");
+const userUpdateFailed = createAction("user/userUpdateFailed");
 
 export const login =
     ({ payload, redirect }) =>
@@ -117,11 +131,13 @@ export const signUp =
             dispatch(authRequestFailed(error.message));
         }
     };
+
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData();
     dispatch(userLoggedOut());
     history.push("/");
 };
+
 function createUser(payload) {
     return async function (dispatch) {
         dispatch(userCreateRequested());
@@ -135,6 +151,16 @@ function createUser(payload) {
     };
 }
 
+export const updateUserData = (payload) => async (dispatch) => {
+    dispatch(userUpdateRequested());
+    try {
+        const { content } = await userService.update(payload);
+        dispatch(userUpdateSuccess(content));
+    } catch (error) {
+        dispatch(userUpdateFailed(error));
+    }
+};
+
 export const loadUsersList = () => async (dispatch, getState) => {
     dispatch(usersRequested());
     try {
@@ -146,11 +172,13 @@ export const loadUsersList = () => async (dispatch, getState) => {
 };
 
 export const getUsersList = () => (state) => state.users.entities;
+
 export const getCurrentUserData = () => (state) => {
     return state.users.entities
         ? state.users.entities.find((u) => u._id === state.users.auth.userId)
         : null;
 };
+
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
         return state.users.entities.find((u) => u._id === userId);

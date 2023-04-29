@@ -6,8 +6,8 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../hooks/useAuth";
-import { useSelector } from "react-redux";
+// import { useAuth } from "../../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
 import {
     getQualities,
     getQualitiesLoadingStatus
@@ -16,14 +16,15 @@ import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
-import { getCurrentUserData } from "../../../store/users";
+import { getCurrentUserData, updateUserData } from "../../../store/users";
 
 const EditUserPage = () => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
-    const { updateUserData } = useAuth();
-
+    // const updateUserData = useSelector(updatedUserData);
+    // const { updateUserData } = useAuth();
+    const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUserData());
     const qualities = useSelector(getQualities());
     const professions = useSelector(getProfessions());
@@ -44,10 +45,17 @@ const EditUserPage = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        await updateUserData({
-            ...data,
-            qualities: data.qualities.map((q) => q.value)
-        });
+        // await updateUserData({
+        //     ...data,
+        //     qualities: data.qualities.map((q) => q.value)
+        // });
+        // await dispatch(updateUserData(data));
+        dispatch(
+            updateUserData({
+                ...data,
+                qualities: data.qualities.map((q) => q.value)
+            })
+        );
 
         history.push(`/users/${currentUser._id}`);
     };
