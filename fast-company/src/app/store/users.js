@@ -65,10 +65,6 @@ const usersSlice = createSlice({
             );
 
             state.entities[userIndex] = action.payload;
-
-            // const userId = action.payload._id;
-            // console.log(state.entities[0]);
-            // console.log(action.payload.users);
         },
         authRequested: (state) => {
             state.error = null;
