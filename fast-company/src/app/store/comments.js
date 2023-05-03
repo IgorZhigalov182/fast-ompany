@@ -59,12 +59,17 @@ export function createComment(payload) {
     };
 }
 
-export const removeComment = (id) => (dispatch) => {
-    dispatch(commentRemove(id));
-    // console.log(commentRemove);
+export const removeComment = (id) => async (dispatch) => {
+    try {
+        const { content } = await commentService.removeComment(id);
+        dispatch(commentRemove(content));
+    } catch (error) {
+        console.log(commentRemove);
+    }
 };
 
 export const getComments = () => (state) => state.comments.entities;
+
 export const getCommentsLoadingStatus = () => (state) =>
     state.comments.isLoading;
 

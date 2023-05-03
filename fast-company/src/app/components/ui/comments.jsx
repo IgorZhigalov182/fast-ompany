@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import {
     createComment,
+    // createComment,
     getComments,
     getCommentsLoadingStatus,
     loadCommentsList,
@@ -13,7 +14,6 @@ import {
 } from "../../store/comments";
 import { useParams } from "react-router-dom";
 import { getCurrentUserId } from "../../store/users";
-import commentService from "../../services/comment.service";
 
 const Comments = () => {
     const currentUserId = useSelector(getCurrentUserId());
@@ -29,7 +29,7 @@ const Comments = () => {
 
     const comments = useSelector(getComments());
 
-    const handleSubmit = async (data) => {
+    const handleSubmit = (data) => {
         const comment = {
             ...data,
             _id: nanoid(),
@@ -38,21 +38,11 @@ const Comments = () => {
             userId: currentUserId
         };
 
-        try {
-            const { content } = await commentService.createComment(comment);
-            dispatch(createComment(content));
-        } catch (error) {
-            console.log(error);
-        }
+        dispatch(createComment(comment));
     };
 
-    const handleRemoveComment = async (id) => {
-        try {
-            const { content } = await commentService.removeComment(id);
-            dispatch(removeComment(content));
-        } catch (error) {
-            console.log(error);
-        }
+    const handleRemoveComment = (id) => {
+        dispatch(removeComment(id));
     };
 
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
