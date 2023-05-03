@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
 
 const commentsSlice = createSlice({
@@ -24,7 +24,9 @@ const commentsSlice = createSlice({
             state.entities.push(action.payload);
         },
         commentRemove: (state, action) => {
-            state.entities.filter((c) => c._id !== action.payload);
+            state.entities = state.entities.filter(
+                (c) => c._id !== action.payload
+            );
         }
     }
 });
@@ -38,6 +40,9 @@ const {
     commentRemove
 } = actions;
 
+const addCommentRequested = createAction("comments/addCommentRequested");
+const removeCommentRequested = createAction("comments/removeCommentRequested");
+
 export const loadCommentsList = (userId) => async (dispatch) => {
     dispatch(commentsRequested());
     try {
@@ -50,21 +55,25 @@ export const loadCommentsList = (userId) => async (dispatch) => {
 
 export function createComment(payload) {
     return async function (dispatch) {
+        dispatch(addCommentRequested());
         try {
             const { content } = await commentService.createComment(payload);
             dispatch(commentCreate(content));
         } catch (error) {
-            console.log(error);
+            dispatch(commentsRequestFailed(error.message));
         }
     };
 }
 
-export const removeComment = (id) => async (dispatch) => {
+export const removeComment = (commentId) => async (dispatch) => {
+    dispatch(removeCommentRequested());
     try {
-        const { content } = await commentService.removeComment(id);
-        dispatch(commentRemove(content));
+        const { content } = await commentService.removeComment(commentId);
+        if (content === null) {
+            dispatch(commentRemove(commentId));
+        }
     } catch (error) {
-        console.log(commentRemove);
+        dispatch(commentsRequestFailed(error.message));
     }
 };
 
