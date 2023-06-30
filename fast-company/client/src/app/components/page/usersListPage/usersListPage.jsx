@@ -18,11 +18,11 @@ const UsersListPage = () => {
     const professions = useSelector(getProfessions());
     const professionsLoading = useSelector(getProfessionsLoadingStatus());
 
+    const pageSize = 8;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const pageSize = 8;
 
     const handleDelete = (userId) => {
         // setUsers(users.filter((user) => user._id !== userId));

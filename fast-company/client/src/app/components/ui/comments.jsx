@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import CommentsList, { AddCommentForm } from "../common/comments";
 // import { useComments } from "../../hooks/useComments";
 import { useDispatch, useSelector } from "react-redux";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import {
     createComment,
     // createComment,
@@ -13,10 +13,10 @@ import {
     removeComment
 } from "../../store/comments";
 import { useParams } from "react-router-dom";
-import { getCurrentUserId } from "../../store/users";
+// import { getCurrentUserId } from "../../store/users";
 
 const Comments = () => {
-    const currentUserId = useSelector(getCurrentUserId());
+    // const currentUserId = useSelector(getCurrentUserId());
     const { userId } = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -28,17 +28,18 @@ const Comments = () => {
     // const { removeComment } = useComments();
 
     const comments = useSelector(getComments());
-
     const handleSubmit = (data) => {
-        const comment = {
-            ...data,
-            _id: nanoid(),
-            pageId: userId,
-            created_at: Date.now(),
-            userId: currentUserId
-        };
+        // const comment = {
+        //     ...data,
+        //     _id: nanoid(),
+        //     pageId: userId,
+        //     created_at: Date.now(),
+        //     userId: currentUserId
+        // };
 
-        dispatch(createComment(comment));
+        // dispatch(createComment(comment));
+
+        dispatch(createComment({ ...data, pageId: userId }));
     };
 
     const handleRemoveComment = (id) => {
