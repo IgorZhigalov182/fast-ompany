@@ -1,1 +1,1 @@
-# fast-ompany
+# fast-company
